@@ -1,0 +1,30 @@
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    border: 1px solid red;
+}
+.header {
+    text-align: center;
+    padding: 15px;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.content {
+    display: flex;
+    height: 500px;
+}
+
+.left-panel {
+    flex: 1 1 auto;
+}
+
+.middle-panel {
+    flex: 1 1 auto;
+    width: 300px;
+    height: 300px;
+}
