@@ -6,20 +6,18 @@ body {
     background-color: rgb(231, 230, 230);
 }
 
-* {
-    border: 1px solid red;
-}
+
 .header {
     text-align: center;
     padding: 15px;
-    font-size: 50px;
+    font-size: 75px;
     font-weight: bold;
     background-color:  rgb(228, 224, 224);
 }
 
 .content {
     display: flex;
-    height: 1000px;
+    height: 1500px;
 }
 
 .left-panel {
@@ -32,14 +30,15 @@ body {
 }
 
 .middle-panel {
-    flex: 3 0 auto;
+    flex: 2 0 auto;
     padding: 0;
+    margin: 25px;
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: center;
 }
 .right-panel {
-    flex: 0.5 2 auto;
+    flex: 1 2 auto;
     
 }
 
@@ -59,7 +58,20 @@ body {
     flex: 1;
 }
 .sketch-cell {
-    width: calc(100%  * 1 / 15);
+    width: calc(100%  * 1 / 64);
+    border: 1px solid black
  
 }
 
+.activated  {
+    background-color: black;
+}
+
+button {
+    border-radius: 50px;
+    font-size: 35px;
+    margin-top: 100px;
+    padding: 20px;
+    flex-basis: 150px;
+    width: 150px;
+}
