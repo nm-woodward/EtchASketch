@@ -6,10 +6,9 @@ const sketchDestination = document.querySelector('.middle-panel');
 const body = document.querySelector('body');
 const clearButton = document.querySelector(".clear");
 const eraserButton = document.querySelector(".eraser");
+const newBoardButton = document.querySelector(".newBoard");
 
-//Create sketchboard div
-const sketchBoard = document.createElement("div");
-sketchBoard.classList.toggle('sketch-board');
+
 
 // Set up mouse down/up toggle as prereq for drawing and erasing
 let toggle = false;
@@ -21,9 +20,15 @@ body.addEventListener('mouseup', () => toggle = false);
 // Function to add sketchboard to page
 function createSketchBoard(nrows,ncols) {
 
-    if (sketchDestination.firstElementChild != null) {
-        sketchDestination.removeChild(sketchBoard)
+    const existingBoard = document.querySelector('.sketch-board');
+    if (existingBoard != null) {
+        sketchDestination.removeChild(existingBoard);
     }
+
+
+    //Create sketchboard div
+    const sketchBoard = document.createElement("div");
+    sketchBoard.classList.toggle('sketch-board');
     
     
     for (let i=1; i <= nrows; i++) {
@@ -78,7 +83,9 @@ clearButton.addEventListener('click', () => {
     cells.forEach( (cell) => {
         cell.classList.remove('activated')
     })
+
 });
+
 }
 
 // Add eraser event listener for eraser button
@@ -86,8 +93,29 @@ eraserButton.addEventListener('click', () => {
     eraser ? eraser = false : eraser = true
     });
 
+
+// For clear function, prompt user for dimensions of new sketchboard
+function askUserForNewDimensions() {
+let nrowInput = parseInt(prompt("Create board of X/X dimensions(10-64): "));
+while (nrowInput<10 || nrowInput>64 || !Number.isInteger(nrowInput))
+{
+    if (isNaN(nrowInput)) {
+        nrowInput = parseInt(prompt("You didn't enter a number. Please enter 10-64: "));
+    }
+    else {
+        nrowInput = parseInt(prompt("Please enter a number 10-64"));
+    }
+}
+return nrowInput;
+}
+
 // Set up a start sketchboard    
 createSketchBoard(20,20);
 
 
-let nrows = prompt("Board s")
+// Add "draw new board function" to New Board button
+newBoardButton.addEventListener('click',() => {
+    //Draw new sketchboard
+    let userSelectedRowCount = askUserForNewDimensions();
+    createSketchBoard(userSelectedRowCount,userSelectedRowCount);
+})
