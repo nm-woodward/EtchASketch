@@ -1,3 +1,5 @@
+
+
 body {
     display: flex;
     flex-direction: column;
@@ -50,16 +52,20 @@ body {
 
 .sketch-board {
     flex: 1;
+    width: 950px;
   
 }
 
 .sketch-row {
     display: flex;
+    justify-content: center;
     flex: 1;
+    margin: 0;
+    padding: 0;
 }
 .sketch-cell {
     width: calc(100%  * 1 / 64);
-    border: 1px solid black
+    border: 1px solid black;
  
 }
 

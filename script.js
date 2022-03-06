@@ -1,17 +1,30 @@
-const ncols = 64;
-const nrows = 64;
+let ncols = 64;
+let nrows = ncols;
 
+//Query selectors for page elements
 const sketchDestination = document.querySelector('.middle-panel');
 const body = document.querySelector('body');
+const clearButton = document.querySelector(".clear");
+const eraserButton = document.querySelector(".eraser");
 
+//Create sketchboard div
+const sketchBoard = document.createElement("div");
+sketchBoard.classList.toggle('sketch-board');
+
+// Set up mouse down/up toggle as prereq for drawing and erasing
+let toggle = false;
+let eraser = false;
+
+body.addEventListener('mousedown', () => toggle = true);
+body.addEventListener('mouseup', () => toggle = false);
+
+// Function to add sketchboard to page
 function createSketchBoard(nrows,ncols) {
 
-    if (sketchBoard != null) {
+    if (sketchDestination.firstElementChild != null) {
         sketchDestination.removeChild(sketchBoard)
     }
     
-    const sketchBoard = document.createElement("div");
-    sketchBoard.classList.toggle('sketch-board');
     
     for (let i=1; i <= nrows; i++) {
         const newRow = document.createElement("div");
@@ -21,41 +34,31 @@ function createSketchBoard(nrows,ncols) {
             const newCol = document.createElement("div");
             newCol.textContent = '';
             newCol.classList.toggle('sketch-cell');
+            newCol.style.width = `calc(65%  * 1 / ${ncols})`;
             newRow.appendChild(newCol);
         }
         sketchBoard.appendChild(newRow);
     }
     
     sketchDestination.appendChild(sketchBoard);
+    const cells = document.querySelectorAll('.sketch-cell');
+    resetCellHeights(cells);
+    addDrawFunctionToCells(cells);
+    addClearFunctionToCells(cells);
 
 }
 
-
-createSketchBoard(20,20);
-
-
 // Reset cell height when screen is res
-
-const cells = document.querySelectorAll('.sketch-cell');
+function resetCellHeights(cells) {
 
 cells.forEach( (cell) => {
     cell.style.height = document.querySelector('.sketch-cell').offsetWidth+"px";
-    console.log(cell.offsetHeight);
+    console.log(cell.offsetHeight);  
 })
+}
 
-
-console.log(sketchDestination);
-
-// Set up mouse down/up toggle as prereq for drawing and erasing
-
-let toggle = false;
-let eraser = false;
-
-body.addEventListener('mousedown', () => toggle = true);
-body.addEventListener('mouseup', () => toggle = false);
-
-// Add draw function to each cell
-
+// Create draw function
+function addDrawFunctionToCells(cells) {
 cells.forEach( (cell) => {
     cell.addEventListener('mouseover', function changeColor() {
         if (toggle && eraser) {
@@ -67,25 +70,24 @@ cells.forEach( (cell) => {
         
     })
 })
-
-// Add eraser event listener for eraser button
-
-const eraserButton = document.querySelector(".eraser");
-
-eraserButton.addEventListener('click', () => {
-    eraser ? eraser = false : eraser = true
-    });
-
-
-// Create clear function
-const clearButton = document.querySelector(".clear");
-
-function clearCells(cells) {
-    cells.forEach( (cell), () => cell.classList.remove('activated'))
 }
 
+// Create clear function
+function addClearFunctionToCells(cells) {
 clearButton.addEventListener('click', () => {
     cells.forEach( (cell) => {
         cell.classList.remove('activated')
     })
 });
+}
+
+// Add eraser event listener for eraser button
+eraserButton.addEventListener('click', () => {
+    eraser ? eraser = false : eraser = true
+    });
+
+// Set up a start sketchboard    
+createSketchBoard(20,20);
+
+
+let nrows = prompt("Board s")
